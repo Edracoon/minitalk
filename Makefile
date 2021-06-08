@@ -23,6 +23,7 @@ libft:
 
 clean:
 			rm -f $(OBJS1) $(OBJS2)
+			make clean -C ./libft
 
 fclean:		clean
 			rm -f $(NAME1) $(NAME2)
