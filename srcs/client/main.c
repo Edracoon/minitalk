@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 16:41:32 by epfennig          #+#    #+#             */
-/*   Updated: 2021/06/07 19:18:56 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/06/08 17:42:09 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	main(int ac, char **av)
 				if (tab[j] == '1')
 				{
 					kill(pid, SIGUSR2);
-					usleep(1);
+					usleep(100);
 				}
 				else if (tab[j] == '0')
 				{
 					kill(pid, SIGUSR1);
-					usleep(1);
+					usleep(100);
 				}
 				j--;
 			}
