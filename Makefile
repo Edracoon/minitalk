@@ -7,8 +7,8 @@ CFLAGS +=	-Wall -Wextra -Werror
 SRCS1 =		srcs/server/server.c
 SRCSB1 =	srcs/server/server_bonus.c
 
-SRCS2 =		srcs/client/client.c srcs/client/char_to_binary.c
-SRCSB2 =	srcs/client/client_bonus.c srcs/client/char_to_binary.c
+SRCS2 =		srcs/client/client.c
+SRCSB2 =	srcs/client/client_bonus.c
 
 OBJS1 =		$(SRCS1:.c=.o)
 OBJS2 =		$(SRCS2:.c=.o)
