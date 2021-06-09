@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 16:41:32 by epfennig          #+#    #+#             */
-/*   Updated: 2021/06/09 16:21:26 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/06/09 17:30:51 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	main(void)
 	sigaction(SIGUSR1, &sigact, NULL);
 	sigaction(SIGUSR2, &sigact, NULL);
 	while (1)
-	{
 		pause();
-	}
 	return (1);
 }

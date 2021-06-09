@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 16:41:32 by epfennig          #+#    #+#             */
-/*   Updated: 2021/06/09 16:50:27 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/06/09 16:59:59 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static int	g_sig = 0;
 
-void	ft_error(char *str)
-{
-	write(1, str, ft_strlen(str));
-	exit(0);
-}
-
 void	glob_to_one(int i)
 {
 	(void)i;
 	g_sig = 1;
+}
+
+void	ft_error(char *str)
+{
+	write(1, str, ft_strlen(str));
+	exit(0);
 }
 
 void	send_charnull(int pid)
