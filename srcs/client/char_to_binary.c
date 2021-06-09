@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   char_to_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/19 10:47:00 by epfennig          #+#    #+#             */
-/*   Updated: 2021/06/09 11:03:38 by epfennig         ###   ########.fr       */
+/*   Created: 2021/06/09 15:19:46 by epfennig          #+#    #+#             */
+/*   Updated: 2021/06/09 15:20:05 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minitalk.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+char	*convert_char_to_binary(char c)
 {
-	size_t	i;
-	size_t	j;
+	char	*tab;
+	int		i;
 
-	i = 0;
-	j = 0;
-	while (i < size && dest[i])
-		i++;
-	while ((i + j + 1) < size && src[j])
+	i = CHAR_BIT - 1;
+	tab = malloc(sizeof(char) * (CHAR_BIT + 1));
+	if (!(tab))
+		ft_error("Error: Malloc failed");
+	while (i >= 0)
 	{
-		dest[i + j] = src[j];
-		j++;
+		tab[i] = (c % 2) + '0';
+		c /= 2;
+		i--;
 	}
-	if (i < size)
-		dest[i + j] = '\0';
-	return (i + ft_strlen((char *)src));
+	tab[CHAR_BIT] = 0;
+	return (tab);
 }

@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/07 16:41:32 by epfennig          #+#    #+#             */
-/*   Updated: 2021/06/09 06:39:12 by epfennig         ###   ########.fr       */
+/*   Created: 2021/06/09 15:20:54 by epfennig          #+#    #+#             */
+/*   Updated: 2021/06/09 15:21:12 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minitalk.h"
+
+static	int	g_sig = 0;
 
 void	ft_error(char *str)
 {
@@ -18,23 +20,51 @@ void	ft_error(char *str)
 	exit(0);
 }
 
-char	*convert_char_to_binary(char c)
+void	send_charnull(int pid)
 {
-	char	*tab;
-	int		i;
+	int	j;
+
+	j = CHAR_BIT - 1;
+	while (j >= 0)
+	{
+		g_sig = 0;
+		usleep(100);
+		if (kill(pid, SIGUSR1) == -1)
+			ft_error("Error: kill error\n");
+		while (!g_sig)
+			;
+		j--;
+	}
+}
+
+void	send_signal(char *tab, int pid)
+{
+	int	i;
 
 	i = CHAR_BIT - 1;
-	tab = malloc(sizeof(char) * (CHAR_BIT + 1));
-	if (!(tab))
-		ft_error("Error: Malloc failed");
 	while (i >= 0)
 	{
-		tab[i] = (c % 2) + '0';
-		c /= 2;
+		g_sig = 0;
+		usleep(100);
+		if (tab[i] == '1')
+		{
+			if (kill(pid, SIGUSR2) == -1)
+				ft_error("Error: kill error\n");
+		}
+		else if (tab[i] == '0')
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				ft_error("Error: kill error\n");
+		}
+		while (!g_sig)
+			;
 		i--;
 	}
-	tab[CHAR_BIT] = 0;
-	return (tab);
+}
+
+void	glob_to_one()
+{
+	g_sig = 1;
 }
 
 int	main(int ac, char **av)
@@ -46,35 +76,19 @@ int	main(int ac, char **av)
 
 	i = -1;
 	j = 0;
+	g_sig = 0;
+	signal(SIGUSR1, glob_to_one);
 	if (ac == 3)
 	{
 		pid = ft_atoi(av[1]);
 		while (av[2][++i])
 		{
 			tab = convert_char_to_binary(av[2][i]);
-			j = CHAR_BIT - 1;
-			while (j >= 0)
-			{
-				if (tab[j] == '1')
-				{
-					kill(pid, SIGUSR2);
-					usleep(200);
-				}
-				else if (tab[j] == '0')
-				{
-					kill(pid, SIGUSR1);
-					usleep(200);
-				}
-				j--;
-			}
+			send_signal(tab, pid);
+			free(tab);
 		}
-		j = CHAR_BIT - 1;
-		while (j >= 0)
-		{
-			kill(pid, SIGUSR1);
-			usleep(200);
-			j--;
-		}
+		send_charnull(pid);
+		write(1, "Server feedback: Message received\n", 35);
 	}
 	else
 		ft_error("Error: Argument\n");
