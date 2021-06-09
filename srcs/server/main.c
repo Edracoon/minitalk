@@ -6,7 +6,7 @@
 /*   By: epfennig <epfennig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 16:41:32 by epfennig          #+#    #+#             */
-/*   Updated: 2021/06/08 20:22:43 by epfennig         ###   ########.fr       */
+/*   Updated: 2021/06/09 06:37:48 by epfennig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ void	sig_handler(int c)
 int	main(void)
 {
 	pid_t	pid;
-	//struct sigaction    sigact;
+	struct sigaction    sigact;
 
 	pid = getpid();
 	ft_putnbr_fd(pid, 1);
 	ft_putchar_fd('\n', 1);
-	// sigact.sa_handler = sig_handler;
-	// sigemptyset(&sigact.sa_mask);
-	// sigaddset(&sigact.sa_mask, SIGUSR1);
-	// sigaddset(&sigact.sa_mask, SIGUSR2);
-	// sigaction(SIGUSR1, &sigact, NULL);
-	// sigaction(SIGUSR2, &sigact, NULL);
-	signal(SIGUSR1, sig_handler);
-	signal(SIGUSR2, sig_handler);
+	sigact.sa_handler = sig_handler;
+	sigemptyset(&sigact.sa_mask);
+	sigaddset(&sigact.sa_mask, SIGUSR1);
+	sigaddset(&sigact.sa_mask, SIGUSR2);
+	sigaction(SIGUSR1, &sigact, NULL);
+	sigaction(SIGUSR2, &sigact, NULL);
+	// signal(SIGUSR1, sig_handler);
+	// signal(SIGUSR2, sig_handler);
 	while (1)
 	{
 		pause();
